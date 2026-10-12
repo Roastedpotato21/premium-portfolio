@@ -1,0 +1,5 @@
+Mode: built-in imagegen
+Use case: stylized-concept
+Final generation prompt:
+
+Create a polished photorealistic 3D editorial illustration asset for the right half of a young female AI developer portfolio hero. Landscape 3:2. A dark aluminum laptop open at three-quarter angle on a clean cool lavender-grey desk, screen showing a realistic dark code editor with small colorful code, black coffee mug on left, dark smartphone in front, cream spiral notebook and pencil at right foreground, stack of three dark books and a small lush leafy plant in a ceramic pot on far right. Soft lavender studio light, subtle purple reflections, premium calm atmosphere, pale nearly white lavender background #f4f3ff with lots of clean space in upper left. Camera slightly above desk. Laptop is centerpiece in lower center-right, all objects fit within frame. No people, no UI, no badges, no headings, no logos, no watermark, no large text. Realistic materials, refined clean composition. Asset will be used as hero illustration alongside real HTML headings and orbit labels.

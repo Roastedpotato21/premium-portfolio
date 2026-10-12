@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Portfolio Content Manager | Siri</title><link rel="stylesheet" href="cms.css"><script defer src="admin-credentials.js"></script><script defer src="cms.js"></script><script defer src="cms-admin.js"></script></head>
+<body class="cms-admin">
+<header class="cms-header"><h1>SIRI · Content Manager</h1><div class="cms-actions"><a href="/">View Portfolio</a><button id="adminBtn" type="button">Admin Login</button><button id="changeCredentialsBtn" type="button" hidden>Change Credentials</button></div></header>
+<main class="cms-shell"><p id="cmsNotice" class="cms-notice" role="status" aria-live="polite">Sign in to manage your portfolio.</p>
+<div id="cmsWorkspace" hidden><nav id="cmsTabs" class="cms-tabs" aria-label="Content sections"></nav><div class="cms-toolbar"><h2 id="cmsSectionTitle">Projects</h2><div class="cms-actions"><button id="cmsReload" type="button">Reload</button><button id="cmsAdd" type="button" class="cms-primary">Add item</button></div></div><div id="cmsList"></div></div>
+</main>
+<dialog id="cmsEditor" class="cms-dialog" aria-labelledby="cmsEditorTitle"><div class="cms-dialog-head"><h2 id="cmsEditorTitle">Add item</h2><button type="button" id="cmsEditorClose" aria-label="Close editor">×</button></div><form id="cmsForm"><div id="cmsFields" class="cms-form-fields"></div><p id="cmsFormNotice" class="cms-notice" role="alert"></p><div class="cms-dialog-footer"><button type="button" id="cmsPreview">Preview</button><button type="button" id="cmsCancel">Cancel</button><button type="submit" id="cmsSubmit" class="cms-primary">Save item</button></div></form></dialog>
+<dialog id="cmsPreviewDialog" class="cms-dialog" aria-labelledby="cmsPreviewTitle"><div class="cms-dialog-head"><h2 id="cmsPreviewTitle">Item preview</h2><button type="button" id="cmsPreviewClose">Close</button></div><div id="cmsPreviewContent" class="cms-preview-content"></div></dialog>
+<dialog id="cmsDeleteDialog" class="cms-dialog" aria-labelledby="cmsDeleteTitle"><h2 id="cmsDeleteTitle">Delete item?</h2><p id="cmsDeleteMessage"></p><p>This removes the item permanently. Uploaded files remain available for other items.</p><div class="cms-dialog-footer"><button id="cmsDeleteCancel" type="button">Cancel</button><button id="cmsDeleteConfirm" type="button" class="cms-danger">Delete permanently</button></div></dialog>
+<div class="login-modal" id="loginModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="adminLoginTitle">
+                <div class="login-modal-content" tabindex="-1">
+                    <div class="login-modal-header">
+                        <h2 class="login-modal-title" id="adminLoginTitle">Admin Login</h2>
+                        <p class="login-modal-subtitle">Enter your credentials to access edit mode</p>
+                        <button type="button" class="login-close" id="loginClose" aria-label="Close login modal">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="login-error" id="loginError" role="alert">Invalid credentials. Please try again.</div>
+                    <p class="login-status" id="loginStatus" role="status" aria-live="polite"></p>
+                    <form class="login-form" id="loginForm">
+                        <div class="login-form-group" id="setupTokenGroup" hidden>
+                            <label for="setupToken">Server setup token</label>
+                            <input type="password" id="setupToken" autocomplete="off" maxlength="128" disabled>
+                            <small>Use the one-time token in the server?s .data/setup-token file.</small>
+                        </div>
+                        <div class="login-form-group" id="currentPasswordGroup" hidden>
+                            <label for="currentPassword">Current Password</label>
+                            <input type="password" id="currentPassword" name="currentPassword" autocomplete="current-password" disabled>
+                        </div>
+                        <div class="login-form-group">
+                            <label for="username">Username</label>
+                            <input type="text" id="username" name="username" placeholder="Enter username" autocomplete="username" maxlength="64" required>
+                        </div>
+                        <div class="login-form-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" name="password" placeholder="Enter password" autocomplete="current-password" maxlength="256" required>
+                        </div>
+                        <div class="login-form-group" id="confirmPasswordGroup" hidden>
+                            <label for="confirmPassword">Confirm New Password</label>
+                            <input type="password" id="confirmPassword" name="confirmPassword" autocomplete="new-password" disabled>
+                        </div>
+                        <p class="login-local-note">Admin credentials and content are saved on the CMS server.</p>
+                        <div class="login-buttons">
+                            <button type="submit" class="login-submit">Login</button>
+                            <button type="button" class="login-cancel" id="loginCancel">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+</body></html>
