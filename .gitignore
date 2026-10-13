@@ -3,3 +3,4 @@ tmp/
 .data/
 node_modules/
 .env
+.vercel

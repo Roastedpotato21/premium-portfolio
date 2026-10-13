@@ -89,5 +89,6 @@ class Repository {
     });
   }
   async settings(input) { return this.mutate(data => { if (input.revision !== data.revision) fail('Settings changed. Reload before saving.', 409); data.site = validateSite(input.site, data.site); return data.site; }); }
+  close() {}
 }
 module.exports = { Repository, seedData, KEY, defaults };

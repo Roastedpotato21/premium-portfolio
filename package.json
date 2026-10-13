@@ -8,6 +8,7 @@
   "scripts": {
     "start": "node server/index.cjs",
     "test": "node --test tests/cms.test.cjs",
+    "test:vercel": "node --test tests/vercel-render.test.cjs",
     "test:browser": "node scripts/verify-cms.cjs",
     "test:portfolio": "node scripts/verify-portfolio.cjs"
   },

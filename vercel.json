@@ -1,0 +1,29 @@
+{
+  "version": 2,
+  "functions": {
+    "api/index.cjs": {
+      "includeFiles": "{index.html,admin.html,server/*.cjs,server/seed.json}"
+    }
+  },
+  "routes": [
+    {
+      "src": "^/(?:index\\.html)?$",
+      "dest": "/api/index.cjs?path=/"
+    },
+    {
+      "src": "^/projects/(?<slug>[^/]+)$",
+      "dest": "/api/index.cjs?slug=$slug"
+    },
+    {
+      "src": "^/admin(?:/.*)?$",
+      "dest": "/api/index.cjs?path=/admin"
+    },
+    {
+      "src": "^/api/(?<apiPath>.*)$",
+      "dest": "/api/index.cjs?apiPath=$apiPath"
+    },
+    {
+      "handle": "filesystem"
+    }
+  ]
+}

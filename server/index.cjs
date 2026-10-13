@@ -14,7 +14,7 @@ function createApp(options = {}) {
   const env = options.env || process.env;
   const client = options.redis === undefined ? redis() : options.redis;
   const store = new Repository(client), authentication = auth(client, env);
-  const origin = env.PUBLIC_ORIGIN || (env.VERCEL_URL ? `https://${env.VERCEL_URL}` : `http://127.0.0.1:${env.PORT || 5501}`);
+  const origin = options.origin || env.PUBLIC_ORIGIN || (env.VERCEL_URL ? `https://${env.VERCEL_URL}` : `http://127.0.0.1:${env.PORT || 5501}`);
   const json = (res, status, body) => { res.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8' }); res.end(JSON.stringify(body)); };
   async function body(req, raw = false) {
     const max = raw ? 4 * 1024 * 1024 : 128 * 1024;
@@ -37,7 +37,9 @@ function createApp(options = {}) {
     const pathname = new URL(req.url, origin).pathname;
     if (pathname.startsWith('/admin') || pathname.startsWith('/api/')) res.setHeader('X-Robots-Tag', 'noindex');
     if (pathname.startsWith('/api/')) {
-      if (!['GET', 'HEAD'].includes(req.method) && req.headers.origin !== origin) fail('Requests must come from this portfolio.', 403);
+      const host = req.headers['x-forwarded-host'] || req.headers.host;
+      const validOrigins = [origin, env.PUBLIC_ORIGIN, env.VERCEL_URL ? `https://${env.VERCEL_URL}` : null, host ? `https://${host}` : null, host ? `http://${host}` : null].filter(Boolean);
+      if (!['GET', 'HEAD'].includes(req.method) && req.headers.origin && !validOrigins.includes(req.headers.origin)) fail('Requests must come from this portfolio.', 403);
       if (pathname === '/api/auth/status' && req.method === 'GET') { const session = await authentication.session(req); return json(res, 200, { configured: authentication.configured, authenticated: !!session, csrf: session?.csrf || null }); }
       if (pathname === '/api/auth/login' && req.method === 'POST') return json(res, 200, await authentication.login(req, res, await body(req)));
       if (pathname === '/api/auth/logout' && req.method === 'POST') return json(res, 200, await authentication.logout(req, res));
@@ -76,9 +78,7 @@ function createApp(options = {}) {
     if (!['GET', 'HEAD'].includes(req.method)) fail('Method not allowed.', 405);
     if (pathname === '/' || pathname === '/index.html') return html(res, portfolioHTML(fs.readFileSync(path.join(root, 'index.html'), 'utf8'), await store.publicData(), env.PUBLIC_ORIGIN));
     if (pathname.startsWith('/projects/')) { const data = await store.publicData(), item = data.projects.find(i => i.slug === pathname.slice(10)); if (!item) fail('Project not found.', 404); return html(res, projectHTML(item, data.site, env.PUBLIC_ORIGIN)); }
-    if (pathname === '/admin/login') return html(res, fs.readFileSync(path.join(root, 'login.html'), 'utf8'));
-    if (pathname === '/admin.html' || pathname === '/admin' || /^\/admin\/(projects|certifications|achievements|skills|experience|education|settings)$/.test(pathname)) {
-      if (!await authentication.session(req)) { res.writeHead(303, { Location: '/admin/login' }); return res.end(); }
+    if (pathname === '/admin.html' || pathname === '/admin' || pathname === '/admin/login' || /^\/admin\/(projects|certifications|achievements|skills|experience|education|settings)$/.test(pathname)) {
       return html(res, fs.readFileSync(path.join(root, 'admin.html'), 'utf8'));
     }
     let file;
