@@ -1371,17 +1371,31 @@ em {
 
 .social-links {
   display: flex;
-  gap: 25px;
+  gap: 14px;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .social-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  font-size: 13px;
   font-weight: 600;
-  transition: color 0.2s, transform 0.2s;
+  color: var(--text-primary);
+  box-shadow: var(--shadow-paper);
+  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.22s, border-color 0.2s, color 0.2s;
 }
 
 .social-links a:hover {
   color: var(--accent);
-  transform: translateY(-2px);
+  border-color: var(--accent);
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: var(--shadow-paper-hover);
 }
 
 .footer {

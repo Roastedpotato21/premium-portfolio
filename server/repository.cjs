@@ -12,7 +12,9 @@ const defaults = {
   projectsTitle: 'Ideas, made real.', skillsTitle: 'A considered toolkit.',
   expTitle: 'Learning by doing.', certTitle: 'Always a student.',
   contactTitle: 'Have something\ninteresting in mind?',
-  githubUrl: 'https://github.com/Roastedpotato21', linkedinUrl: '', resumeUrl: '',
+  githubUrl: 'https://github.com/Roastedpotato21',
+  linkedinUrl: 'https://www.linkedin.com/in/siri-munukuntla-636319390',
+  resumeUrl: '',
   otherSocialUrl: '', otherSocialLabel: '', portraitUrl: 'images/siri-profile.jpg',
 };
 function seedData(source = original) {
