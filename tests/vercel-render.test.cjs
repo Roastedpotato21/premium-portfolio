@@ -3,7 +3,7 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const http = require('node:http');
 const { once } = require('node:events');
-const handler = require('../api/index.cjs');
+const handler = require('../api/index.js');
 
 test('Vercel function renders the homepage and serves CMS content from seed fallback', async t => {
   const redisNames = [
