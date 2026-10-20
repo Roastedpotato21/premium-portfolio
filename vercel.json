@@ -2,7 +2,7 @@
   "version": 2,
   "functions": {
     "api/index.js": {
-      "includeFiles": "{index.html,admin.html,server/*.cjs,server/seed.json}"
+      "includeFiles": "{index.html,index.template.html,admin.html,server/*.cjs,server/seed.json}"
     }
   },
   "routes": [

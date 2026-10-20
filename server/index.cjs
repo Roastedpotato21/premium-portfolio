@@ -76,7 +76,10 @@ function createApp(options = {}) {
       fail('Endpoint not found.', 404);
     }
     if (!['GET', 'HEAD'].includes(req.method)) fail('Method not allowed.', 405);
-    if (pathname === '/' || pathname === '/index.html') return html(res, portfolioHTML(fs.readFileSync(path.join(root, 'index.html'), 'utf8'), await store.publicData(), env.PUBLIC_ORIGIN));
+    if (pathname === '/' || pathname === '/index.html') {
+      const templateFile = fs.existsSync(path.join(root, 'index.template.html')) ? path.join(root, 'index.template.html') : path.join(root, 'index.html');
+      return html(res, portfolioHTML(fs.readFileSync(templateFile, 'utf8'), await store.publicData(), env.PUBLIC_ORIGIN));
+    }
     if (pathname.startsWith('/projects/')) { const data = await store.publicData(), item = data.projects.find(i => i.slug === pathname.slice(10)); if (!item) fail('Project not found.', 404); return html(res, projectHTML(item, data.site, env.PUBLIC_ORIGIN)); }
     if (pathname === '/admin.html' || pathname === '/admin' || pathname === '/admin/login' || /^\/admin\/(projects|certifications|achievements|skills|experience|education|settings)$/.test(pathname)) {
       return html(res, fs.readFileSync(path.join(root, 'admin.html'), 'utf8'));
